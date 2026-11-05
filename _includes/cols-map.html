@@ -1,0 +1,311 @@
+<p>All the cols I have climbed by bike so far! Stay tuned for updates, in the meantime you can click on a marker for a picture and details &mdash; and don't forget to rate them, based on your experience or anything else!</p>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<style>
+  #colmap { height: 600px; width: 100%; border-radius: 6px; margin-bottom: 2em; }
+  .col-rank-icon {
+    display: flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.4);
+    background: #3f7bbf; color: #fff; font-weight: bold; font-size: 13px;
+  }
+  .col-rank-icon span { transform: rotate(45deg); }
+  .col-rank-icon.rank-1 { background: #d4a017; }
+  .col-rank-icon.rank-2 { background: #8c9bab; }
+  .col-rank-icon.rank-3 { background: #ad6f3b; }
+  .col-popup img { width: 100%; border-radius: 4px; margin-top: 6px; }
+  .col-popup h4 { margin: 0 0 4px 0; }
+  .col-popup .col-meta { color: #555; font-size: 0.85em; }
+
+  .col-card {
+    display: flex; gap: 1em; align-items: flex-start;
+    border-bottom: 1px solid #e0e0e0; padding: 1em 0;
+  }
+  .col-card img { width: 220px; max-width: 40%; border-radius: 6px; flex-shrink: 0; }
+  .col-card h3 { margin: 0 0 0.2em 0; }
+  .col-card .col-meta { color: #555; font-size: 0.9em; margin-bottom: 0.4em; }
+  .col-card .col-rank-badge {
+    display: inline-block; min-width: 1.6em; text-align: center;
+    background: #3f7bbf; color: #fff; border-radius: 4px;
+    padding: 0.1em 0.35em; margin-right: 0.4em; font-weight: bold;
+  }
+  .col-card.rank-1 .col-rank-badge { background: #d4a017; }
+  .col-card.rank-2 .col-rank-badge { background: #8c9bab; }
+  .col-card.rank-3 .col-rank-badge { background: #ad6f3b; }
+
+  .col-avg { font-weight: bold; color: #b8860b; }
+  .col-vote { margin-top: 0.3em; display: flex; align-items: center; gap: 0.3em; flex-wrap: wrap; }
+  .col-vote-label { font-size: 0.9em; color: #555; margin-right: 0.2em; }
+  .col-star {
+    background: none; border: none; padding: 0 0.05em; cursor: pointer;
+    font-size: 1.5em; line-height: 1; color: #ccc;
+  }
+  .col-star.filled { color: #d4a017; }
+  .col-star:hover { transform: scale(1.15); }
+  .col-vote-info { font-size: 0.85em; color: #555; margin-left: 0.4em; }
+</style>
+
+<div id="colmap"></div>
+
+{% assign ranked_cols = site.data.cols | sort: "rank" %}
+
+<div id="col-cards">
+{% for col in ranked_cols %}
+<div class="col-card rank-{{ forloop.index }}" data-slug="{{ col.name | slugify }}" data-name="{{ col.name }}" id="col-{{ col.name | slugify }}">
+  {% if col.image %}
+  <img src="{{ base_path }}/images/cols/{{ col.image }}" alt="{{ col.name }}" onerror="this.style.display='none'">
+  {% endif %}
+  <div>
+    <h3><span class="col-rank-badge">{{ forloop.index }}</span>{{ col.name }}</h3>
+    <div class="col-meta">
+      {{ col.country }} &middot; {{ col.elevation }} m{% if col.date %} &middot; {{ col.date }}{% endif %}
+      &middot; my rank: {{ col.rank }}<span class="col-avg-slot"></span>
+    </div>
+    {% if col.comment %}<p>{{ col.comment }}</p>{% endif %}
+    <div class="col-vote-slot"></div>
+  </div>
+</div>
+{% endfor %}
+</div>
+
+<script>
+(function () {
+  /* ---- Supabase configuration --------------------------------------------
+     Paste your project's values here (Supabase dashboard -> Project Settings
+     -> Data API / API Keys). The publishable key is designed to be public.
+     NOTE: use only block comments in this script - the theme compresses the
+     HTML onto one line, and a line comment would break everything after it.
+     ----------------------------------------------------------------------- */
+  var SUPABASE_URL = "https://xxsnkeyjtjvktdjumjnv.supabase.co";
+  var SUPABASE_ANON_KEY = "sb_publishable_LaZkWFajJPS39LnxNh8JXQ_LdS0zaKU";
+
+  var VOTING_ENABLED = SUPABASE_URL.indexOf("https://") === 0;
+
+  var cols = {{ ranked_cols | jsonify }};
+  var basePath = "{{ base_path }}";
+
+  /* Little mountain icon used for ratings (inherits the button/text color) */
+  var MOUNTAIN_SVG = '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" style="vertical-align:-0.1em" aria-hidden="true"><path d="M1.5 20 L9 4.5 L13.6 12.8 L16.2 8.7 L22.5 20 Z"/></svg>';
+
+  /* Match each col in the JSON to its card (and Jekyll-generated slug) by name */
+  var cardByName = {};
+  document.querySelectorAll('#col-cards .col-card').forEach(function (card) {
+    cardByName[card.getAttribute('data-name')] = card;
+  });
+  cols.forEach(function (col) {
+    var card = cardByName[col.name];
+    col.slug = card ? card.getAttribute('data-slug') : col.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  });
+
+  /* Anonymous voter identity + own votes, kept in this browser */
+  function getVoterId() {
+    try {
+      var id = localStorage.getItem('colVoterId');
+      if (!id) {
+        id = (crypto.randomUUID ? crypto.randomUUID() :
+          'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+          }));
+        localStorage.setItem('colVoterId', id);
+      }
+      return id;
+    } catch (e) { return null; }
+  }
+  function getMyVotes() {
+    try { return JSON.parse(localStorage.getItem('colMyVotes') || '{}'); } catch (e) { return {}; }
+  }
+  function saveMyVote(slug, rating) {
+    try {
+      var v = getMyVotes(); v[slug] = rating;
+      localStorage.setItem('colMyVotes', JSON.stringify(v));
+    } catch (e) { /* private mode etc. - vote still counts server-side */ }
+  }
+
+  /* latestVotes["slug|voterId"] = rating  (last vote per person per col wins) */
+  var latestVotes = {};
+
+  function computeStats() {
+    var stats = {};
+    Object.keys(latestVotes).forEach(function (key) {
+      var slug = key.split('|')[0];
+      if (!stats[slug]) stats[slug] = { sum: 0, count: 0 };
+      stats[slug].sum += latestVotes[key];
+      stats[slug].count += 1;
+    });
+    Object.keys(stats).forEach(function (slug) {
+      stats[slug].avg = stats[slug].sum / stats[slug].count;
+    });
+    return stats;
+  }
+
+  function fetchVotes() {
+    return fetch(SUPABASE_URL + '/rest/v1/col_votes?select=col_slug,voter_id,rating&order=id.asc', {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+    }).then(function (res) {
+      if (!res.ok) throw new Error('vote fetch failed: ' + res.status);
+      return res.json();
+    }).then(function (rows) {
+      rows.forEach(function (row) {
+        latestVotes[row.col_slug + '|' + row.voter_id] = row.rating;
+      });
+    });
+  }
+
+  function submitVote(slug, rating) {
+    var voterId = getVoterId();
+    if (!voterId) return Promise.reject(new Error('no voter id'));
+    return fetch(SUPABASE_URL + '/rest/v1/col_votes', {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal'
+      },
+      body: JSON.stringify({ col_slug: slug, voter_id: voterId, rating: rating })
+    }).then(function (res) {
+      if (!res.ok) throw new Error('vote failed: ' + res.status);
+      latestVotes[slug + '|' + voterId] = rating;
+      saveMyVote(slug, rating);
+    });
+  }
+
+  /* ---- Rendering -------------------------------------------------------- */
+
+  var map = L.map('colmap').setView([46.5, 7.5], 5);
+  var topoLayer = L.tileLayer('https://tile.opentopomap.org/{z}/{x}/{y}.png', {
+    maxZoom: 17,
+    attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+                 '<a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; ' +
+                 '<a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+  }).addTo(map);
+  var satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 17,
+    attribution: 'Imagery &copy; <a href="https://www.esri.com">Esri</a> &mdash; Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community'
+  });
+  L.control.layers({ 'Map': topoLayer, 'Satellite': satelliteLayer }, null, { position: 'topright' }).addTo(map);
+  var markerLayer = L.layerGroup().addTo(map);
+
+  function sortedByVisitors(stats) {
+    return cols.slice().sort(function (a, b) {
+      var sa = stats[a.slug], sb = stats[b.slug];
+      var avgA = sa ? sa.avg : -1, avgB = sb ? sb.avg : -1;
+      if (avgA !== avgB) return avgB - avgA;
+      var cA = sa ? sa.count : 0, cB = sb ? sb.count : 0;
+      if (cA !== cB) return cB - cA;
+      return a.rank - b.rank;
+    });
+  }
+
+  function render() {
+    var stats = computeStats();
+    var ordered = sortedByVisitors(stats);
+    var container = document.getElementById('col-cards');
+    markerLayer.clearLayers();
+    var markerBounds = [];
+
+    ordered.forEach(function (col, i) {
+      var pos = i + 1;
+      var s = stats[col.slug];
+
+      /* Card: reorder, renumber, show average */
+      var card = cardByName[col.name];
+      if (card) {
+        container.appendChild(card);
+        card.className = 'col-card rank-' + pos;
+        card.querySelector('.col-rank-badge').textContent = pos;
+        var avgSlot = card.querySelector('.col-avg-slot');
+        avgSlot.innerHTML = s
+          ? ' &middot; <span class="col-avg">' + s.avg.toFixed(1) + ' ' + MOUNTAIN_SVG + '</span> (' +
+            s.count + ' vote' + (s.count === 1 ? '' : 's') + ')'
+          : (VOTING_ENABLED ? ' &middot; no votes yet' : '');
+      }
+
+      /* Marker */
+      if (col.lat == null || col.lon == null) return;
+      var icon = L.divIcon({
+        className: '',
+        html: '<div class="col-rank-icon rank-' + pos + '"><span>' + pos + '</span></div>',
+        iconSize: [30, 30],
+        iconAnchor: [15, 30],
+        popupAnchor: [0, -28]
+      });
+      var html = '<div class="col-popup"><h4>' + pos + '. ' + col.name + '</h4>' +
+        '<div class="col-meta">' + col.country + ' &middot; ' + col.elevation + ' m' +
+        (col.date ? ' &middot; ' + col.date : '') +
+        (s ? ' &middot; ' + s.avg.toFixed(1) + ' ' + MOUNTAIN_SVG + ' (' + s.count + ')' : '') + '</div>' +
+        (col.comment ? '<p>' + col.comment + '</p>' : '') +
+        (col.image ? '<img src="' + basePath + '/images/cols/' + col.image + '" alt="' + col.name + '" onerror="this.style.display=\'none\'">' : '') +
+        '<a href="#col-' + col.slug + '">More below</a></div>';
+      L.marker([col.lat, col.lon], { icon: icon })
+        .addTo(markerLayer)
+        .bindPopup(html, { maxWidth: 260 });
+      markerBounds.push([col.lat, col.lon]);
+    });
+
+    if (markerBounds.length > 0) {
+      map.fitBounds(markerBounds, { padding: [40, 40], maxZoom: 9 });
+    }
+  }
+
+  function buildVoteWidgets() {
+    cols.forEach(function (col) {
+      var card = cardByName[col.name];
+      if (!card) return;
+      var slot = card.querySelector('.col-vote-slot');
+      var widget = document.createElement('div');
+      widget.className = 'col-vote';
+      var label = document.createElement('span');
+      label.className = 'col-vote-label';
+      label.textContent = 'Your rating:';
+      widget.appendChild(label);
+      var stars = [];
+      for (var v = 1; v <= 5; v++) {
+        (function (value) {
+          var btn = document.createElement('button');
+          btn.className = 'col-star';
+          btn.innerHTML = MOUNTAIN_SVG;
+          btn.setAttribute('aria-label', 'Rate ' + col.name + ' ' + value + ' of 5');
+          btn.addEventListener('click', function () {
+            submitVote(col.slug, value).then(function () {
+              paint(value);
+              info.textContent = 'thanks!';
+              render();
+            }).catch(function () {
+              info.textContent = 'vote failed - try again later';
+            });
+          });
+          stars.push(btn);
+          widget.appendChild(btn);
+        })(v);
+      }
+      var info = document.createElement('span');
+      info.className = 'col-vote-info';
+      widget.appendChild(info);
+      function paint(rating) {
+        stars.forEach(function (b, idx) {
+          b.className = 'col-star' + (idx < rating ? ' filled' : '');
+        });
+      }
+      var mine = getMyVotes()[col.slug];
+      if (mine) { paint(mine); info.textContent = 'you rated ' + mine; }
+      slot.appendChild(widget);
+    });
+  }
+
+  if (VOTING_ENABLED) {
+    buildVoteWidgets();
+    fetchVotes().then(render).catch(function (err) {
+      console.warn('Could not load votes, falling back to my ranking.', err);
+      render();
+    });
+  } else {
+    render();
+  }
+})();
+</script>

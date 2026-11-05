@@ -20,10 +20,12 @@ package-lock.json
 .vscode/
 .idea/
 
-# LaTeX build artifacts (CV)
+# LaTeX build artifacts (CV) - the CV source of truth is Overleaf,
+# and the website serves files/cv.pdf
 CV/*.aux
 CV/*.log
 CV/*.out
+CV/main.pdf
 
 # Ignore files created by MacOS
 .DS_Store
