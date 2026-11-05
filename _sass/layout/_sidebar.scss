@@ -305,6 +305,11 @@
 
   li {
     white-space: nowrap;
+
+    // In the desktop sidebar, let long entries (e.g. employer) wrap instead of being clipped
+    @include breakpoint($large) {
+      white-space: normal;
+    }
   }
 
   a {

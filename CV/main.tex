@@ -1,0 +1,126 @@
+% a mashup of hipstercv, friggeri and twenty cv
+% https://www.latextemplates.com/template/twenty-seconds-resumecv
+% https://www.latextemplates.com/template/friggeri-resume-cv
+
+\documentclass[lighthipster]{simplehipstercv}
+% available options are: darkhipster, lighthipster, pastel, allblack, grey, verylight, withoutsidebar
+% withoutsidebar
+\usepackage[utf8]{inputenc}
+\usepackage[default]{raleway}
+\usepackage[margin=1cm, a4paper]{geometry}
+
+
+\usepackage{afterpage}
+\usepackage{atbegshi}
+
+\hypersetup{colorlinks=true, urlcolor=pblue, linkcolor=black}
+
+\definecolor{sidebargrey}{rgb}{0.9,0.9,0.9}
+
+
+%------------------------------------------------------------------ Variablen
+
+\newlength{\rightcolwidth}
+\newlength{\leftcolwidth}
+\setlength{\leftcolwidth}{0.23\textwidth}
+\setlength{\rightcolwidth}{0.75\textwidth}
+
+%------------------------------------------------------------------
+%\title{New Simple CV}
+%\author{\LaTeX{} Ninja}
+%\date{June 2019}
+
+\pagestyle{empty}
+\begin{document}
+
+
+\thispagestyle{empty}
+%-------------------------------------------------------------
+
+% light grey bar on the left edge of every page, full height; on page 1 the
+% dark header is drawn on top of it and covers its upper part
+\AtBeginShipout{\AtBeginShipoutUpperLeft{\color{sidebargrey}\rule[-\paperheight]{2.1cm}{\paperheight}}}
+
+\simpleheader{headercolour}{David}{Hägele}{PhD Student \hspace{1em} \icon{\faEnvelopeO}{white}{} \href{mailto:haegele@mpia.de}{haegele@mpia.de}}{white}
+
+%------------------------------------------------
+
+% this has to be here so the paracols starts..
+\subsection*{}
+\vspace{4em}
+
+\setlength{\columnsep}{1.5cm}
+\columnratio{0.02}[0.98]
+\begin{paracol}{2}
+\hbadness5000
+
+\switchcolumn
+
+\small
+\section*{Education}
+
+\begin{tabular}{r| p{0.67\textwidth} c}
+    \cvevent{Oct 2025--present}{Doctor of Philosophy in Astronomy}{Max Planck Institute for Astronomy}{Heidelberg, Germany}{Describe it here!}{} \\
+    \cvevent{Aug 2023--Sep 2025}{Master of Science in Physics}{Heidelberg University, Max Planck Institute for Astronomy}{Heidelberg, Germany}{Focus on exoplanets, astronomy, and environmental physics. Thesis with Paul Mollière on a Python package to calculate high-resolution opacities.}{}\\
+    \cvevent{Aug 2023--Jan 2024}{Erasmus Semester}{Uppsala University}{Uppsala, Sweden}{Lectures on planetary and space physics and astronomy. Research project with Nikolai Piskunov on principal component analysis-based removal of telluric lines from generated synthetic transmission
+    spectra of gas giant exoplanets.}{}\\
+    \cvevent{Sep 2020--Aug 2023}{Bachelor of Science in Physics}{Heidelberg University, Max Planck Institute for Astronomy }{Heidelberg, Germany}{Focus on astronomy and exoplanets. Thesis with Maria Steinrück on an enhanced parameterization of 1D vertical mixing in hot Jupiter atmospheres.}{}\\
+\end{tabular}
+
+
+\vspace{0.4em}
+
+
+\section*{Publications}
+\textbf{As first-author}
+\vspace{0.5em}
+\begin{enumerate}
+    \item Haegele, D. B., Mollière, P., Min, M. (2026): line racer: rapid calculation of exoplanet radiative opacities. Submitted to the Journal of Open Source Software. 
+\end{enumerate}
+
+\vspace{0.4em}
+
+\textbf{As co-author}
+\vspace{0.5em}
+\begin{enumerate}
+    \item Steinrueck, M. E. et al. (incl. \textbf{David Haegele}, submitted): Limb asymmetries on WASP-39b: A Multi-GCM Comparison of Chemistry, Clouds, and Hazes. Submitted to The Astrophysical Journal, arXiv:2509.21588.
+    \item Espinoza, N., Steinrueck, M.E., Kirk, J. et al. (incl. \textbf{David Haegele}) Inhomogeneous terminators on the exoplanet WASP-39 b. Nature \textbf{632}, 1017–1020 (2024). \href{https://doi.org/10.1038/s41586-024-07768-4}{https://doi.org/10.1038/s41586-024-07768-4}
+\end{enumerate}
+
+
+\vspace{0.4em}
+
+
+\section*{Software}
+\begin{tabular}{r| p{0.67\textwidth} c}
+    \cvevent{line racer}{Main developer}{Open source Python package}{\href{https://line-racer.readthedocs.io/en/latest/}{line-racer.readthedocs.io}}{Designed and wrote the package from scratch: rapid calculation of high-resolution radiative opacities for exoplanet atmospheres (JOSS paper submitted).}{} \\
+    \cvevent{petitRADTRANS}{Maintainer \& core developer}{Open source Python package}{\href{https://petitradtrans.readthedocs.io/en/latest/}{petitradtrans.readthedocs.io}}{Part of the active development team of the widely used package for calculating exoplanet spectra and running atmospheric retrievals; maintain the code base and develop new features.}{} \\
+\end{tabular}
+
+
+\vspace{0.4em}
+
+
+\section*{Presentations}
+
+\begin{itemize}
+    \item Spectroscopy of Exoplanets Over All Wavelength, contributed talk, June 2025
+    \item A New Era in Exoplanet Atmosphere Observation and Characterisation (summerschool), poster presentation, July 2025
+\end{itemize}
+
+
+\vspace{0.4em}
+
+
+\section*{Teaching experience}
+
+\begin{itemize}
+    \item Abitur preparation tutor for math and physics (2020, 2022, 2024, 2025): Repetition of the content of two years and exercises in preparation for the final exams. Groups of 12 students for one week of 6 hours per day.
+\end{itemize}
+
+\vfill{}
+\vfill{} % Whitespace before final footer
+
+\end{paracol}
+
+\end{document}
