@@ -1,0 +1,211 @@
+# Cols I have cycled, ranked.
+#
+# To add a col, copy one of the blocks below. Fields:
+#   name:        name of the col/pass
+#   rank:        your personal ranking (1 = best); the list and markers are sorted by this
+#   country:     country (or countries) the col is in
+#   lat, lon:    coordinates of the summit (right-click in Google Maps -> copy coordinates)
+#   elevation:   summit elevation in meters
+#   date:        when you rode it (free text, e.g. "August 2024")
+#   image:       filename of a photo in images/cols/ (optional, leave out if you have none yet)
+#   comment:     a short personal note shown in the popup and the list (optional)
+
+- name: Col du Königstuhl
+  rank: 1
+  country: Germany
+  lat: 49.4033
+  lon: 8.7277
+  elevation: 566
+  image:
+  comment:
+
+- name: Weißer Stein
+  rank: 20
+  country: Germany
+  lat: 49.4529
+  lon: 8.7235
+  elevation: 550
+  image:
+  comment:
+
+- name: Del Teide - El Tabonal Negro
+  rank: 4
+  country: Spain
+  lat: 28.2578
+  lon: -16.6107
+  elevation: 2362
+  image:
+  comment:
+
+- name: Korensko sedlo
+  rank: 21
+  country: Slovenia
+  lat: 46.5176
+  lon: 13.7514
+  elevation: 1071
+  image:
+  comment:
+
+- name: Bohinjsko sedlo
+  rank: 22
+  country: Slovenia
+  lat: 46.2416
+  lon: 14.0092
+  elevation: 1277
+  image:
+  comment:
+
+- name: Kobariški Stol
+  rank: 13
+  country: Slovenia
+  lat: 46.272340
+  lon: 13.476857
+  elevation: 1400
+  image:
+  comment:
+
+- name: Vršič-Pass
+  rank: 11
+  country: Slovenia
+  lat: 46.4348
+  lon: 13.7437
+  elevation: 1611
+  image:
+  comment:
+
+- name: Passo del Cason di Lanza
+  rank: 15
+  country: Italy
+  lat: 46.56598
+  lon: 13.17098
+  elevation: 1552
+  image:
+  comment:
+
+- name: Großglockner Hochalpenstraße
+  rank: 7
+  country: Austria
+  lat: 47.082145
+  lon:  12.842594
+  elevation: 2504
+  image:
+  comment:
+
+- name: Punta Veleno
+  rank: 18
+  country: Italy
+  lat: 45.6951
+  lon: 10.7920
+  elevation: 1156
+  image:
+  comment:
+
+- name: Bocca dei Fortini
+  rank: 16
+  country: Italy
+  lat: 45.84163
+  lon: 10.76720
+  elevation: 1243
+  image:
+  comment:
+
+- name: Col de la Colombière
+  rank: 9
+  country: France
+  lat: 45.99222
+  lon: 6.47569
+  elevation: 1618
+  image:
+  comment:
+
+- name: Col des Aravis
+  rank: 14
+  country: France
+  lat: 45.8719
+  lon: 6.4633
+  elevation: 1486
+  image:
+  comment:
+
+- name: Col des Saisies
+  rank: 17
+  country: France
+  lat: 45.7583
+  lon: 6.5286
+  elevation: 1657
+  image:
+  comment:
+
+- name: Cormet de Roselend
+  rank: 6
+  country: France
+  lat: 45.6913
+  lon: 6.6906
+  elevation: 1968
+  image:
+  comment:
+
+- name: Col de l'Iseran
+  rank: 5
+  country: France
+  lat: 45.4167
+  lon: 7.0317
+  elevation: 2764
+  image:
+  comment:
+
+- name: Col du Télégraphe
+  rank: 19
+  country: France
+  lat: 45.1968
+  lon: 6.4432
+  elevation: 1566
+  image:
+  comment:
+
+- name: Col du Galibier
+  rank: 2
+  country: France
+  lat: 45.0647
+  lon: 6.4075
+  elevation: 2642
+  image:
+  comment:
+
+- name: Col de Vars
+  rank: 12
+  country: France
+  lat: 44.5389
+  lon: 6.7022
+  elevation: 2108
+  image:
+  comment:
+
+- name: Cime de la Bonette
+  rank: 3
+  country: France
+  lat: 44.3218
+  lon: 6.8070
+  elevation: 2802
+  image:
+  comment:
+
+- name: Col Saint-Martin
+  rank: 10
+  country: France
+  lat: 44.07185
+  lon: 7.22039
+  elevation: 1503
+  image:
+  comment:
+
+- name: Col de Turini
+  rank: 8
+  country: France
+  lat: 43.977351
+  lon: 7.391649
+  elevation: 1607
+  image:
+  comment:
+
+
