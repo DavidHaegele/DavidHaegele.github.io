@@ -14,9 +14,9 @@ Atmospheric modeling in two dimensions
 
 Current models of substellar atmospheres treat the planet in one dimension, at most resolving two different limb structures. 
 With instruments like the James Webb Space Telescope and the advent of high spectral resolution observations with the ELT, increasingly precise measurements of atmospheres are possible. 
-Especially time variable objects will then be possible to be spatially resolved. A technique with which this is possible is the Doppler imaging. 
-I will use this method, which makes advantage of the shift of spectral lines in the parts of the object that are rotating towards and away from the observer, to distribute different atmospheric models on an object.  
-With this, we aim to explain the variability that we observe and identify the sources of it, like varying chemical abundances, different temperature structures or cloud decs.
+This will make it possible to spatially resolve especially time-variable objects. One technique for this is Doppler imaging. 
+I will use this method, which takes advantage of the shift of spectral lines in the parts of the object that are rotating towards and away from the observer, to distribute different atmospheric models across an object.  
+With this, we aim to explain the variability that we observe and identify the sources of it, like varying chemical abundances, different temperature structures or cloud decks.
 
 Opacities
 ======
@@ -55,7 +55,7 @@ Earlier work
 ======
 
 - **Telluric line removal** — research project with Nikolai Piskunov at Uppsala University on removing telluric contamination from synthetic transmission spectra of gas giants using principal component analysis.
-- **Telescope guiding** - research project with Sabine Reffert at the Landessternwarte of the Zentrum für Astronomie in Heidelberg on improving the guiding software of the Walz telescope.
+- **Telescope guiding** — research project with Sabine Reffert at the Landessternwarte of the Zentrum für Astronomie in Heidelberg on improving the guiding software of the Walz telescope.
 
 Talks & posters
 ======
