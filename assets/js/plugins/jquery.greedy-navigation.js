@@ -74,9 +74,18 @@ function updateNav() {
 $(window).on('resize', function () {
   updateNav();
 });
-screen.orientation.addEventListener("change", function () {
-  updateNav();
-});
+/* screen.orientation is missing on iOS Safari < 16.4 and some in-app
+   browsers; without this guard the error would also kill the button's
+   click handler and the initial updateNav() call below. */
+if (screen.orientation && screen.orientation.addEventListener) {
+  screen.orientation.addEventListener("change", function () {
+    updateNav();
+  });
+} else {
+  $(window).on('orientationchange', function () {
+    updateNav();
+  });
+}
 
 $btn.on('click', function () {
   $hlinks.toggleClass('hidden');
