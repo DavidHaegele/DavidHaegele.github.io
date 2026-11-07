@@ -9,7 +9,7 @@ author_profile: true
 
 I develop and maintain open source software for the calculation and analysis of exoplanet and brown dwarf atmosphere spectra.
 
-line racer
+[line racer](https://line-racer.readthedocs.io/en/latest/)
 ======
 *Role: main developer*
 
@@ -20,9 +20,9 @@ The software can calculate opacities from the most popular databases (ExoMol, HI
 It is especially useful for the largest line lists with billions of lines. Why that is, you can read on the [Documentation](https://line-racer.readthedocs.io/en/latest/) website.
 If you have any additional feature requests or other ideas how to improve the code, please raise an issue on gitlab or email me!
 
-petitRADTRANS
+[petitRADTRANS](https://petitradtrans.readthedocs.io/en/latest/)
 ======
-*Role: maintainer & core developer*
+*Role: maintainer*
 
 A widely used open source Python package for calculating spectra of exoplanets and brown/M dwarfs and running atmospheric retrievals. 
 I am part of the active development team: I maintain the code base and develop new features. 
