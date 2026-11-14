@@ -60,7 +60,7 @@ Earlier work
 Talks & posters
 ======
 
-- **EXOMINTS 2026: Next-generation inference for exoplanet atmospheres in the JWST and ELT era** (workshop) — attended, 2026
+- **EXOMINTS 2026: Next-generation inference for exoplanet atmospheres in the JWST and ELT era** (Ringberg workshop) — attended, November 2026
 - **Hors3s**, Granada, Spain — contributed talk, July 2026
 - **Exoplanets VI**, Porto, Portugal — poster, June 2026
 - **A New Era in Exoplanet Atmosphere Observation and Characterisation** (summer school), Bad Honnef, Germany — poster, July 2025
