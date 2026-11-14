@@ -35,10 +35,10 @@ Vertical mixing in hot Jupiters
 ======
 
 How do gases and hazes get stirred up in the atmospheres of distant planets?
-Vertical mixing is often described by a single parameter, the eddy diffusion coefficient $K_{zz}$, which is a key input for 1D models of atmospheric chemistry and haze formation. 
-For my Bachelor thesis with Maria Steinrueck, I estimated $K_{zz}$ by fitting an analytical solution of the 1D tracer transport equation to haze profiles from 3D simulations of photochemical hazes on the hot Jupiter HD 189733b, and compared the results with existing estimates.
-I also explored how $K_{zz}$ depends on haze feedback and on the choice of radiative transfer scheme. 
-The key result is a new broken power-law parameterization of $K_{zz}$ that matches the 3D simulations better than previous approaches, giving 1D chemical kinetics and haze microphysics models a more accurate description of vertical mixing.
+Vertical mixing is often described by a single parameter, the eddy diffusion coefficient $$K_{zz}$$, which is a key input for 1D models of atmospheric chemistry and haze formation. 
+For my Bachelor thesis with Maria Steinrueck, I estimated $$K_{zz}$$ by fitting an analytical solution of the 1D tracer transport equation to haze profiles from 3D simulations of photochemical hazes on the hot Jupiter HD 189733b, and compared the results with existing estimates.
+I also explored how $$K_{zz}$$ depends on haze feedback and on the choice of radiative transfer scheme. 
+The key result is a new broken power-law parameterization of $$K_{zz}$$ that matches the 3D simulations better than previous approaches, giving 1D chemical kinetics and haze microphysics models a more accurate description of vertical mixing.
 
 <div style="display: flex; flex-wrap: wrap; gap: 1.5em; margin: 1.5em 0; align-items: flex-start;">
   <figure style="flex: 1 1 280px; margin: 0;">
@@ -60,6 +60,7 @@ Earlier work
 Talks & posters
 ======
 
+- **EXOMINTS 2026: Next-generation inference for exoplanet atmospheres in the JWST and ELT era** (workshop) — attended, 2026
 - **Hors3s**, Granada, Spain — contributed talk, July 2026
 - **Exoplanets VI**, Porto, Portugal — poster, June 2026
 - **A New Era in Exoplanet Atmosphere Observation and Characterisation** (summer school), Bad Honnef, Germany — poster, July 2025

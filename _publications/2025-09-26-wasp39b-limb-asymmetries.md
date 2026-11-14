@@ -7,7 +7,6 @@ date: 2025-09-26
 venue: 'The Astrophysical Journal'
 submitted: true
 link: 'https://arxiv.org/abs/2509.21588'
-paperurl: 'https://arxiv.org/abs/2509.21588'
 citation: 'Steinrueck, M. E. et al. (incl. David Haegele) (submitted). &quot;Limb asymmetries on WASP-39b: A Multi-GCM Comparison of Chemistry, Clouds, and Hazes.&quot; Submitted to The Astrophysical Journal, arXiv:2509.21588.'
 ---
 
