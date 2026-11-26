@@ -15,7 +15,7 @@ I develop and maintain open source software for the calculation and analysis of 
 
 An open source Python package for the fast calculation of high-resolution opacities for atmospheres. 
 I wrote the package as my Master's thesis with Paul Mollière and turned it into a publicly available, easy-to-use tool during the start of my PhD.
-A first-author paper introducing it is submitted to the Journal of Open Source Software. 
+A paper introducing it is submitted to the Journal of Open Source Software and available as a [preprint on arXiv](https://arxiv.org/abs/2611.33290). 
 The software can calculate opacities from the most popular databases (ExoMol, HITRAN, HITEMP and VALD3) and efficiently distribute the computational tasks over multiple cores and nodes. 
 It is especially useful for the largest line lists with billions of lines. You can read why on the [Documentation](https://line-racer.readthedocs.io/en/latest/) website.
 If you have any additional feature requests or other ideas how to improve the code, please raise an issue on GitLab or email me!

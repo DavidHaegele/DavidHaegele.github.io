@@ -24,7 +24,7 @@ Opacities
 Interpreting high-resolution spectra requires knowing how strongly molecules absorb light at every wavelength — their opacities. 
 In my master's thesis I developed [line racer](https://line-racer.readthedocs.io/en/latest/), an open-source Python package for the fast calculation of high-resolution opacities from molecular line lists.
 It combines two methods of line profile calculation to be both accurate and fast, and parallelizes with MPI so that very large line lists (billions of lines) can be processed on clusters.
-You can find a detailed description of the physics and computational methods behind it on the documentation website.
+You can find a detailed description of the physics and computational methods behind it in the [paper](https://arxiv.org/abs/2611.33290) and on the documentation website.
 
 <figure style="margin: 1.5em auto; max-width: 560px;">
   <img src="{{ base_path }}/images/research/CH4_racer_opacity.png" alt="Methane absorption cross-sections computed with line racer at different pressures and temperatures" style="width: 100%; background: #fff; border-radius: 4px;">
@@ -60,7 +60,7 @@ Earlier work
 Talks & posters
 ======
 
-- **EXOMINTS 2026: Next-generation inference for exoplanet atmospheres in the JWST and ELT era** (Ringberg workshop) — attended, November 2026
+- **EXOMINTS 2026: Next-generation inference for exoplanet atmospheres in the JWST and ELT era** (Ringberg Heyworkshop) — attended, November 2026
 - **Hors3s**, Granada, Spain — contributed talk, July 2026
 - **Exoplanets VI**, Porto, Portugal — poster, June 2026
 - **A New Era in Exoplanet Atmosphere Observation and Characterisation** (summer school), Bad Honnef, Germany — poster, July 2025
