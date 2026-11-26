@@ -26,7 +26,9 @@
     display: flex; gap: 1em; align-items: flex-start;
     border-bottom: 1px solid #e0e0e0; padding: 1em 0;
   }
-  .col-card img { width: 220px; max-width: 40%; border-radius: 6px; flex-shrink: 0; }
+  .col-card .col-photo { width: 220px; max-width: 40%; flex-shrink: 0; }
+  .col-card .col-photo img { width: 100%; border-radius: 6px; display: block; }
+  .col-credit { color: #777; font-size: 0.7em; text-align: right; margin-top: 2px; }
   .col-card h3 { margin: 0 0 0.2em 0; }
   .col-card .col-meta { color: #555; font-size: 0.9em; margin-bottom: 0.4em; }
   .col-card .col-rank-badge {
@@ -58,7 +60,10 @@
 {% for col in ranked_cols %}
 <div class="col-card rank-{{ forloop.index }}" data-slug="{{ col.name | slugify }}" data-name="{{ col.name }}" id="col-{{ col.name | slugify }}">
   {% if col.image %}
-  <img src="{{ base_path }}/images/cols/{{ col.image }}" alt="{{ col.name }}" onerror="this.style.display='none'">
+  <div class="col-photo">
+    <img src="{{ base_path }}/images/cols/{{ col.image }}" alt="{{ col.name }}" onerror="this.parentNode.style.display='none'">
+    {% if col.credit %}<div class="col-credit">&copy; {{ col.credit }}</div>{% endif %}
+  </div>
   {% endif %}
   <div>
     <h3><span class="col-rank-badge">{{ forloop.index }}</span>{{ col.name }}</h3>
@@ -241,6 +246,7 @@
         (s ? ' &middot; ' + s.avg.toFixed(1) + ' ' + MOUNTAIN_SVG + ' (' + s.count + ')' : '') + '</div>' +
         (col.comment ? '<p>' + col.comment + '</p>' : '') +
         (col.image ? '<img src="' + basePath + '/images/cols/' + col.image + '" alt="' + col.name + '" onerror="this.style.display=\'none\'">' : '') +
+        (col.image && col.credit ? '<div class="col-credit">&copy; ' + col.credit + '</div>' : '') +
         '<a href="#col-' + col.slug + '">More below</a></div>';
       L.marker([col.lat, col.lon], { icon: icon })
         .addTo(markerLayer)

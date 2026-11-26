@@ -8,6 +8,7 @@
 #   elevation:   summit elevation in meters
 #   date:        when you rode it (free text, e.g. "August 2024")
 #   image:       filename of a photo in images/cols/ (optional, leave out if you have none yet)
+#   credit:      photographer of the image, shown as "© <credit>" below it (optional)
 #   comment:     a short personal note shown in the popup and the list (optional)
 
 - name: Col du Königstuhl
@@ -61,7 +62,8 @@
   lat: 46.272340
   lon: 13.476857
   elevation: 1400
-  image:
+  image: kobariski-stol.jpg
+  credit: Mathis H.
   comment:
 
 - name: Vršič-Pass
@@ -70,7 +72,8 @@
   lat: 46.4348
   lon: 13.7437
   elevation: 1611
-  image:
+  image: vrsic.jpg
+  credit: Mathis H.
   comment:
 
 - name: Passo del Cason di Lanza
@@ -88,7 +91,8 @@
   lat: 47.082145
   lon:  12.842594
   elevation: 2504
-  image:
+  image: grossglockner.jpg
+  credit: Mathis H.
   comment:
 
 - name: Punta Veleno
@@ -115,7 +119,7 @@
   lat: 45.99222
   lon: 6.47569
   elevation: 1618
-  image:
+  image: colombiere.jpg
   comment:
 
 - name: Col des Aravis
@@ -124,7 +128,7 @@
   lat: 45.8719
   lon: 6.4633
   elevation: 1486
-  image:
+  image: aravis.jpg
   comment:
 
 - name: Col des Saisies
@@ -142,7 +146,8 @@
   lat: 45.6913
   lon: 6.6906
   elevation: 1968
-  image:
+  image: roselend.jpg
+  credit: Mathis H.
   comment:
 
 - name: Col de l'Iseran
@@ -151,7 +156,8 @@
   lat: 45.4167
   lon: 7.0317
   elevation: 2764
-  image:
+  image: iseran.jpg
+  credit: Mathis H.
   comment:
 
 - name: Col du Télégraphe
@@ -160,7 +166,7 @@
   lat: 45.1968
   lon: 6.4432
   elevation: 1566
-  image:
+  image: telegraphe.jpg
   comment:
 
 - name: Col du Galibier
@@ -169,7 +175,8 @@
   lat: 45.0647
   lon: 6.4075
   elevation: 2642
-  image:
+  image: galibier.jpg
+  credit: Mathis H.
   comment:
 
 - name: Col de Vars
@@ -178,7 +185,7 @@
   lat: 44.5389
   lon: 6.7022
   elevation: 2108
-  image:
+  image: vars.jpg
   comment:
 
 - name: Cime de la Bonette
@@ -187,7 +194,7 @@
   lat: 44.3218
   lon: 6.8070
   elevation: 2802
-  image:
+  image: bonette.jpg
   comment:
 
 - name: Col Saint-Martin
@@ -196,7 +203,7 @@
   lat: 44.07185
   lon: 7.22039
   elevation: 1503
-  image:
+  image: saint-martin.jpg
   comment:
 
 - name: Col de Turini
@@ -205,7 +212,7 @@
   lat: 43.977351
   lon: 7.391649
   elevation: 1607
-  image:
+  image: turini.jpg
   comment:
 
 
