@@ -18,7 +18,10 @@
   .col-rank-icon.rank-1 { background: #d4a017; }
   .col-rank-icon.rank-2 { background: #8c9bab; }
   .col-rank-icon.rank-3 { background: #ad6f3b; }
-  .col-popup img { width: 100%; border-radius: 4px; margin-top: 6px; }
+  .col-popup img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+    border-radius: 4px; margin-top: 6px; cursor: zoom-in;
+  }
   .col-popup h4 { margin: 0 0 4px 0; }
   .col-popup .col-meta { color: #555; font-size: 0.85em; }
 
@@ -27,8 +30,24 @@
     border-bottom: 1px solid #e0e0e0; padding: 1em 0;
   }
   .col-card .col-photo { width: 220px; max-width: 40%; flex-shrink: 0; }
-  .col-card .col-photo img { width: 100%; border-radius: 6px; display: block; }
+  .col-card .col-photo img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+    border-radius: 6px; display: block; cursor: zoom-in;
+  }
   .col-credit { color: #777; font-size: 0.7em; text-align: right; margin-top: 2px; }
+
+  #col-lightbox {
+    display: none; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 10000;
+    flex-direction: column; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.88); cursor: zoom-out;
+  }
+  #col-lightbox.open { display: flex; }
+  #col-lightbox img { max-width: 95vw; max-height: 85vh; border-radius: 4px; }
+  #col-lightbox .col-lightbox-caption { color: #eee; font-size: 0.9em; margin-top: 0.6em; text-align: center; }
+  #col-lightbox .col-lightbox-close {
+    position: absolute; top: 0.3em; right: 0.5em; background: none; border: none;
+    color: #fff; font-size: 2em; line-height: 1; cursor: pointer;
+  }
   .col-card h3 { margin: 0 0 0.2em 0; }
   .col-card .col-meta { color: #555; font-size: 0.9em; margin-bottom: 0.4em; }
   .col-card .col-rank-badge {
@@ -61,7 +80,7 @@
 <div class="col-card rank-{{ forloop.index }}" data-slug="{{ col.name | slugify }}" data-name="{{ col.name }}" id="col-{{ col.name | slugify }}">
   {% if col.image %}
   <div class="col-photo">
-    <img src="{{ base_path }}/images/cols/{{ col.image }}" alt="{{ col.name }}" onerror="this.parentNode.style.display='none'">
+    <img src="{{ base_path }}/images/cols/{{ col.image }}" alt="{{ col.name }}" title="Click to enlarge"{% if col.credit %} data-credit="{{ col.credit }}"{% endif %} onerror="this.parentNode.style.display='none'">
     {% if col.credit %}<div class="col-credit">&copy; {{ col.credit }}</div>{% endif %}
   </div>
   {% endif %}
@@ -76,6 +95,12 @@
   </div>
 </div>
 {% endfor %}
+</div>
+
+<div id="col-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged photo">
+  <button class="col-lightbox-close" aria-label="Close">&times;</button>
+  <img alt="">
+  <div class="col-lightbox-caption"></div>
 </div>
 
 <script>
@@ -245,7 +270,8 @@
         (col.date ? ' &middot; ' + col.date : '') +
         (s ? ' &middot; ' + s.avg.toFixed(1) + ' ' + MOUNTAIN_SVG + ' (' + s.count + ')' : '') + '</div>' +
         (col.comment ? '<p>' + col.comment + '</p>' : '') +
-        (col.image ? '<img src="' + basePath + '/images/cols/' + col.image + '" alt="' + col.name + '" onerror="this.style.display=\'none\'">' : '') +
+        (col.image ? '<img src="' + basePath + '/images/cols/' + col.image + '" alt="' + col.name + '" title="Click to enlarge"' +
+          (col.credit ? ' data-credit="' + col.credit + '"' : '') + ' onerror="this.style.display=\'none\'">' : '') +
         (col.image && col.credit ? '<div class="col-credit">&copy; ' + col.credit + '</div>' : '') +
         '<a href="#col-' + col.slug + '">More below</a></div>';
       L.marker([col.lat, col.lon], { icon: icon })
@@ -303,6 +329,34 @@
       slot.appendChild(widget);
     });
   }
+
+  /* ---- Photo lightbox: click a photo (card or map popup) to enlarge it ---- */
+
+  var lightbox = document.getElementById('col-lightbox');
+  var lightboxImg = lightbox.querySelector('img');
+  var lightboxCaption = lightbox.querySelector('.col-lightbox-caption');
+  /* Move it out of the animated page container, otherwise the masthead stays on top */
+  document.body.appendChild(lightbox);
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightboxImg.removeAttribute('src');
+  }
+
+  /* Capture phase, because Leaflet stops clicks from bubbling out of its popups */
+  document.addEventListener('click', function (e) {
+    if (lightbox.classList.contains('open')) { closeLightbox(); return; }
+    var img = e.target;
+    if (!img.matches || !img.matches('.col-photo img, .col-popup img')) return;
+    var credit = img.getAttribute('data-credit');
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightboxCaption.textContent = img.alt + (credit ? ' · © ' + credit : '');
+    lightbox.classList.add('open');
+  }, true);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
 
   if (VOTING_ENABLED) {
     buildVoteWidgets();

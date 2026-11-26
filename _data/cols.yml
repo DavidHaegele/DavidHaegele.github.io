@@ -17,7 +17,8 @@
   lat: 49.4033
   lon: 8.7277
   elevation: 566
-  image:
+  image: koenigstuhl.jpg
+  credit: Johannes B.
   comment:
 
 - name: Weißer Stein
@@ -35,7 +36,7 @@
   lat: 28.2578
   lon: -16.6107
   elevation: 2362
-  image:
+  image: teide.jpg
   comment:
 
 - name: Korensko sedlo
